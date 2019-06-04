@@ -2,6 +2,12 @@ import React, {Component} from 'react';
 
 
 class Message extends Component {
+    constructor(props) {
+    super(props);
+    this.state = {currentUser: {name: "Bob"}
+                  Messages:
+                   };
+    } 
 	render() {
     return (
     	<div>
@@ -13,6 +19,11 @@ class Message extends Component {
     			Anonymous1 changed their name to nomnom.
   			</div></div>
     );
+
+      this.state = {
+
+      }
+
   }
 
 }
