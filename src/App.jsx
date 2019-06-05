@@ -29,8 +29,8 @@ class App extends Component {
                             username:this.state.currentUser, 
                             type:"incomingMessage",
                             id:generateRandomString()}
-      const newMessages = this.state.messages.concat(messageValue);
-      this.setState({messages:newMessages});
+      // const newMessages = this.state.messages.concat(messageValue);
+      // this.setState({messages:newMessages});
       this.state.socket.send(JSON.stringify(messageValue));
     }
   }
@@ -41,9 +41,16 @@ class App extends Component {
       socket
     })
 
-    socket.onmessage = (event) => {
-      console.log(event);
-    // code to handle incoming message
+    socket.onmessage = (e) => {
+      const data = JSON.parse(e.data)
+      const newMessage = {
+        username:data.username,
+        content:data.content,
+        id: data.id
+      }
+      this.setState({
+        messages: this.state.messages.concat([newMessage])
+      })
     }
   }
 
