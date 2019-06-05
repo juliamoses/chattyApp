@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import MessageList from './MessageList.jsx'
 import ChatBar from './ChatBar.jsx'
+// const wss = new Server({ port: 3001 });
 
 
 const generateRandomString = () => {
@@ -65,28 +66,18 @@ class App extends Component {
   userHitsEnter = (evt) => {
     if (evt.key === 'Enter') {
       console.log(evt);
-      const messageValue = {content: evt.target.value, username:"evt.form", type:"incomingMessage", id:generateRandomString()}
+      const messageValue = {content: evt.target.value, 
+                            username:evt.target.value, 
+                            type:"incomingMessage",
+                            id:generateRandomString()}
       const newMessages = this.state.messages.concat(messageValue);
       this.setState({messages:newMessages});
-      // {
-      //   content: evt.target.value,
-      //   type: evt.target.name === 'messageInput' ? 'messageSent' :
-      //     evt.target.name === 'userInput' ? 'userNameChanged' :
-      //     '',
-      console.log(evt.target.value)
     }
   }
 
-
-
   componentDidMount() {
     console.log("componentDidMount <App />");
-    setTimeout(() => {
-      console.log("Simulating incoming message");
-      const newMessage = { id: 3, username: "Michelle", content: "Hello there!" };
-      const messages = this.state.messages.concat(newMessage)
-      this.setState({ messages: messages })
-    }, 3000);
+
   }
 
 
