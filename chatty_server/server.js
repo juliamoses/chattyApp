@@ -1,5 +1,7 @@
 const express = require('express');
 const SocketServer = require('ws').Server;
+const uuidv4 = require('uuid/v4');
+
 
 // Set the port to 3001
 const PORT = 3001;
@@ -26,7 +28,15 @@ wss.on('connection', (ws) => {
 //event.data
 	ws.onmessage = function (event) {
 		const parsedData = JSON.parse(event.data)
-  	console.log("User", parsedData.username, "said", parsedData.content)
+		parsedData.id = uuidv4();
+		const stringedData = JSON.stringify(parsedData)
+		
+		wss.clients.forEach(function each(client) {
+    	client.send(stringedData)
+    })
+  	console.log("User", parsedData.username, 
+  							"said", parsedData.content, 
+  							"id", parsedData.id)
 	}
 
 

@@ -3,6 +3,13 @@ import MessageList from './MessageList.jsx'
 import ChatBar from './ChatBar.jsx'
 
 
+
+const generateRandomString = () => {
+  const newURL = Math.random().toString(36).substring(7);
+  return newURL;
+}
+
+
 class App extends Component {
 
   constructor(props) {
@@ -33,6 +40,11 @@ class App extends Component {
     this.setState({
       socket
     })
+
+    socket.onmessage = (event) => {
+      console.log(event);
+    // code to handle incoming message
+    }
   }
 
 
