@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import MessageList from './MessageList.jsx'
 import ChatBar from './ChatBar.jsx'
-// const wss = new Server({ port: 3001 });
+
 
 
 const generateRandomString = () => {
@@ -67,7 +67,7 @@ class App extends Component {
     if (evt.key === 'Enter') {
       console.log(evt);
       const messageValue = {content: evt.target.value, 
-                            username:evt.target.value, 
+                            username:this.state.currentUser, 
                             type:"incomingMessage",
                             id:generateRandomString()}
       const newMessages = this.state.messages.concat(messageValue);
@@ -76,8 +76,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    console.log("componentDidMount <App />");
-
+    const socket = new WebSocket("ws://localhost:3001");
   }
 
 
@@ -88,7 +87,8 @@ class App extends Component {
         <a href="/" className="navbar-brand">Chatty</a>
       </nav>
       <MessageList messages={this.state.messages} />
-      <ChatBar userHitsEnter={this.userHitsEnter}/>
+      <ChatBar theUser = {this.state.currentUser} 
+            userHitsEnter={this.userHitsEnter}/>
     </div>
 
     );
