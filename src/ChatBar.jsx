@@ -1,42 +1,39 @@
 import React, { Component } from 'react';
 
 class ChatBar extends Component {
-	constructor(props) {
-		super(props)
+	handleInput = e => {
+		const {
+			userHitsEnter
+		} = this.props;
 
-		this.state = {
-			username: '',
-			message: ''
+		if (e.key === 'Enter') {
+			userHitsEnter({
+				content: e.target.value,
+				type: e.target.name === 'messageInput' ? 'messageSent' 
+					: e.target.name === 'userInput' ? 'userNameChanged' 
+					: '',
+			})
 		}
 	}
 
-	onNameChange = (e) => {
-		// Update the state
-		console.log(e.target.value);
-		this.setState({ username: e.target.value })
-		// check if key is enter, if so - send the message to server
-		
-	}
-
-	onMessageChange = (e) => {
-		this.setState({ message: e.target.value })
-		// check if key is enter, if so - send the message to server
-
-	}
-
-    render() {
-        return (
-	       	<div>
-		        <footer className="chatbar">
-		 		<input className="chatbar-username" onC
-		 		hange={this.onNameChange} placeholder="Your Name (Optional)" />
-		 		<input className="chatbar-message" onChange={this.onMessageChange} placeholder="Type a message and hit ENTER" />
-				</footer>
-			</div>
-        );
-    }
-
-
+  render() {
+    return (
+    	<footer className="chatbar">
+ 				<input 
+ 					className="chatbar-username" 
+ 					name="userInput" 
+ 					onKeyUp={this.handleInput} 
+ 					placeholder="Your Name (Optional)" 
+ 					/>
+ 				<input 
+ 					className="chatbar-message" 
+ 					name="messageInput" 
+ 					onKeyUp={this.handleInput} 
+ 					placeholder="Type a message and hit ENTER" 
+ 					/>
+			</footer>
+    );
+  }
 }
 
 

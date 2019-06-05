@@ -60,6 +60,10 @@ class App extends Component {
         };
     }
 
+    userHitsEnter = (stuff) => {
+      console.log(stuff);
+    }
+
     componentDidMount() {
         console.log("componentDidMount <App />");
         setTimeout(() => {
@@ -78,7 +82,7 @@ class App extends Component {
           <a href="/" className="navbar-brand">Chatty</a>
         </nav>
         <MessageList messages={this.state.messages} />
-        <ChatBar />
+        <ChatBar userHitsEnter={this.userHitsEnter}/>
       </div>
 
         );
