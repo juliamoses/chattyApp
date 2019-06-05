@@ -24,16 +24,27 @@ class App extends Component {
 
   userHitsEnter = (evt) => {
     if (evt.key === 'Enter') {
-      console.log(evt);
-      const messageValue = {content: evt.target.value, 
-                            username:this.state.currentUser, 
-                            type:"incomingMessage",
-                            id:generateRandomString()}
-      // const newMessages = this.state.messages.concat(messageValue);
-      // this.setState({messages:newMessages});
+      const messageValue = {
+        content: evt.target.value,
+        username: this.state.currentUser,
+        type: "incomingMessage",
+        id: generateRandomString()
+      }
       this.state.socket.send(JSON.stringify(messageValue));
     }
   }
+
+  changeUser = (evt) => {
+    if (evt.key === 'Enter') {
+      let userValue = { username: evt.target.value }
+      this.setState({
+      currentUser: userValue.username
+      });
+    }
+    
+    console.log("hey")
+  }
+
 
   componentDidMount() {
     const socket = new WebSocket("ws://localhost:3001");
@@ -44,8 +55,8 @@ class App extends Component {
     socket.onmessage = (e) => {
       const data = JSON.parse(e.data)
       const newMessage = {
-        username:data.username,
-        content:data.content,
+        username: data.username,
+        content: data.content,
         id: data.id
       }
       this.setState({
@@ -62,7 +73,7 @@ class App extends Component {
         <a href="/" className="navbar-brand">Chatty</a>
       </nav>
       <MessageList messages={this.state.messages} />
-      <ChatBar theUser = {this.state.currentUser} 
+      <ChatBar changeUser = {this.changeUser} 
                userHitsEnter={this.userHitsEnter}/>
     </div>
 
@@ -71,7 +82,3 @@ class App extends Component {
 }
 
 export default App;
-
-
-
-
