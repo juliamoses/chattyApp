@@ -1,5 +1,6 @@
 const express = require('express');
-const SocketServer = require('ws').Server;
+const WebSocket = require('ws')
+const SocketServer = WebSocket.Server;
 const uuidv4 = require('uuid/v4');
 
 
@@ -14,20 +15,29 @@ const wss = new SocketServer({ server });
 wss.on('connection', (ws) => {
   console.log('Client connected');
 
- //  const initialMessage = {
- //  username,
- //  content
-	// }
-//event.data
+
 	ws.onmessage = function (event) {
 		const parsedData = JSON.parse(event.data)
 		parsedData.id = uuidv4();
-		const stringedData = JSON.stringify(parsedData)
+		if (parsedData.type === "postMessage") {
+			parsedData.type = 'incomingMessage'
+			const stringedData = JSON.stringify(parsedData)
 
-		wss.clients.forEach(function each(client) {
-			client.readyState === WebSocket.OPEN
-    	client.send(stringedData)
-    })
+			wss.clients.forEach(function each(client) {
+				client.readyState === WebSocket.OPEN
+	    	client.send(stringedData)
+    	})
+		} else if (parsedData.type === "postNotification") {
+			parsedData.type = "incomingNotification"
+			const stringedData = JSON.stringify(parsedData)
+
+			wss.clients.forEach(function each(client) {
+				client.readyState === WebSocket.OPEN
+	    	client.send(stringedData)
+    	})
+		}
+
+		
 	}
 
 

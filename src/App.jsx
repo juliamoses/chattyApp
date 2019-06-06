@@ -27,22 +27,25 @@ class App extends Component {
       const messageValue = {
         content: evt.target.value,
         username: this.state.currentUser,
-        type: "incomingMessage",
+        type: "postMessage",
         id: generateRandomString()
       }
       this.state.socket.send(JSON.stringify(messageValue));
     }
   }
 
+
   changeUser = (evt) => {
     if (evt.key === 'Enter') {
-      let userValue = { username: evt.target.value }
+      let userValue = {type: "postNotification", content: 
+                      `${this.state.currentUser} has changed their name to 
+                       ${evt.target.value}`}
+
       this.setState({
-      currentUser: userValue.username
+      currentUser: evt.target.value
       });
+      this.state.socket.send(JSON.stringify(userValue));
     }
-    
-    console.log("hey")
   }
 
 
@@ -57,7 +60,8 @@ class App extends Component {
       const newMessage = {
         username: data.username,
         content: data.content,
-        id: data.id
+        id: data.id,
+        type: data.type
       }
       this.setState({
         messages: this.state.messages.concat([newMessage])
@@ -73,7 +77,8 @@ class App extends Component {
         <a href="/" className="navbar-brand">Chatty</a>
       </nav>
       <MessageList messages={this.state.messages} />
-      <ChatBar changeUser = {this.changeUser} 
+      <ChatBar //currentUser = {this.state.currentUser}
+               changeUser = {this.changeUser} 
                userHitsEnter={this.userHitsEnter}/>
     </div>
 

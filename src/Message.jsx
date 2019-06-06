@@ -3,16 +3,24 @@ import React, { Component } from 'react';
 class Message extends Component {
   render() {
     return (
-      <div>
+      <div className="messageSystem">
         <div className="message">
+          {this.props.message.type === "incomingMessage" ?
+
+          <div>
           <span className="message-username">{this.props.message.username}</span>
           <span className="message-content">{this.props.message.content}</span>
+          </div> : 
+
+          <span className="message-content">
+            <em>
+              {this.props.message.content}
+            </em>
+          </span>}
         </div>
-      <div className="message system">
-      Anonymous1 changed their name to nomnom.
-      </div>
-    </div>
-    );
+       </div>
+          
+    )
   }
 }
 
