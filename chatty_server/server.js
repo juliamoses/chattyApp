@@ -12,8 +12,20 @@ const server = express()
 
 const wss = new SocketServer({ server });
 
+
 wss.on('connection', (ws) => {
   console.log('Client connected');
+
+
+  //for displaying online users
+  wss.clients.forEach(function each(client) {
+  	console.log("users online", wss.clients.size)
+    if (client.readyState === WebSocket.OPEN) {
+    	client.send(JSON.stringify({
+    		userCount: wss.clients.size, type: "userOnline"
+    	}))
+    }
+  })
 
 
 	ws.onmessage = function (event) {
@@ -41,6 +53,18 @@ wss.on('connection', (ws) => {
 	}
 
 
-  // Set up a callback for when a client closes the socket. This usually means they closed their browser.
-  ws.on('close', () => console.log('Client disconnected'));
+ 
+  ws.on('close', () => {
+  	wss.clients.forEach(client => {
+  		if(client.readyState === WebSocket.OPEN) {
+  			client.send (JSON.stringify({
+    		userCount: wss.clients.size, type: "userOnline"
+    	}))
+  		}
+  	})
+  })
+
 });
+
+
+

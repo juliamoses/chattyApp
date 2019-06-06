@@ -16,7 +16,8 @@ class App extends Component {
     super(props);
     this.state = {
       currentUser: "Bob",
-      messages: []
+      messages: [],
+      userCount: 0
     };
     this.userHitsEnter = this.userHitsEnter.bind(this);
   }
@@ -49,6 +50,15 @@ class App extends Component {
   }
 
 
+  userActive = (evt) => {
+    if(evt.type === "userOnline") {
+      this.setState ({
+        userCount: evt.userCount
+      });
+    }
+  }
+
+
   componentDidMount() {
     const socket = new WebSocket("ws://localhost:3001");
     this.setState({
@@ -61,7 +71,10 @@ class App extends Component {
         username: data.username,
         content: data.content,
         id: data.id,
-        type: data.type
+        type: data.type,
+      }
+      if(data.type === "userOnline") {
+        this.userActive(data)
       }
       this.setState({
         messages: this.state.messages.concat([newMessage])
@@ -73,12 +86,13 @@ class App extends Component {
   render() {
     return (
       <div>
-      <nav className="navbar">
+      <nav className="navbar" >
         <a href="/" className="navbar-brand">Chatty</a>
-      </nav>
+        <span className="userCount">USERS: {this.state.userCount}</span>
+      </nav >
       <MessageList messages={this.state.messages} />
       <ChatBar //currentUser = {this.state.currentUser}
-               changeUser = {this.changeUser} 
+               changeUser = {this.changeUser}
                userHitsEnter={this.userHitsEnter}/>
     </div>
 
