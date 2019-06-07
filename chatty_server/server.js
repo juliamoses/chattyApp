@@ -14,7 +14,7 @@ const wss = new SocketServer({ server });
 
 
 const randomizeColor = () => {
-  const colors = ['#00efef', '#ff4992', '#f39025', '#aaa']
+  const colors = ['#9FFFF5', '#7CFFC4', '#6ABEA7', '#BDFFFD']
   return colors[Math.floor(Math.random() * colors.length)];
 }
 
