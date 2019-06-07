@@ -28,4 +28,5 @@ open http://localhost:3000
 * [webpack-dev-server](https://github.com/webpack/webpack-dev-server)
 
 
-![A nice chat]()
+## Screenshots
+![A nice chat](https://github.com/juliamoses/chattyApp/blob/master/docs/chattyApp.png)
