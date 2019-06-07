@@ -23,7 +23,6 @@ wss.on('connection', (ws) => {
   ws.color = randomizeColor();
 
 
-  //for displaying online users
   wss.clients.forEach(function each(client) {
     if (client.readyState === WebSocket.OPEN) {
     	client.send(JSON.stringify({
@@ -31,7 +30,6 @@ wss.on('connection', (ws) => {
     	}))
     }
   })
-
 
 	ws.onmessage = function (event) {
 		const parsedData = JSON.parse(event.data)
@@ -55,7 +53,6 @@ wss.on('connection', (ws) => {
     	})
 		}
 
-		
 	}
 
 

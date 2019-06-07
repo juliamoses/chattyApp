@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 class ChatBar extends Component {
   render() {
     return (
-    	<form className="chatbar">
+      <form className="chatbar">
  				<input 
  					className="chatbar-username" 
  					name="userInput" 

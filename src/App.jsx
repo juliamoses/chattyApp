@@ -35,29 +35,27 @@ class App extends Component {
     }
   }
 
-
   changeUser = (evt) => {
     if (evt.key === 'Enter') {
-      let userValue = {type: "postNotification", content: 
-                      `${this.state.currentUser} has changed their name to 
-                       ${evt.target.value}`}
-
+      let userValue = {
+        type: "postNotification",
+        content: `${this.state.currentUser} has changed their name to 
+                       ${evt.target.value}`
+      }
       this.setState({
-      currentUser: evt.target.value
+        currentUser: evt.target.value
       });
       this.state.socket.send(JSON.stringify(userValue));
     }
   }
 
-
   userActive = (evt) => {
-    if(evt.type === "userOnline") {
-      this.setState ({
+    if (evt.type === "userOnline") {
+      this.setState({
         userCount: evt.userCount
       });
     }
   }
-
 
   componentDidMount() {
     const socket = new WebSocket("ws://localhost:3001");
@@ -74,16 +72,15 @@ class App extends Component {
         type: data.type,
         color: data.color
       }
-      if(data.type === "userOnline") {
+      if (data.type === "userOnline") {
         this.userActive(data)
       }
       this.setState({
         messages: this.state.messages.concat([newMessage])
       })
     }
-
-
   }
+
   render() {
     return (
       <div>
