@@ -6,7 +6,7 @@ class MessageList extends Component {
     const message = this.props.messages.map(message => 
       {return (
       	<Message message={message} />
-      	)}
+      )}
       );
 
     return (

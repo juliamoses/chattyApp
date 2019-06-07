@@ -72,6 +72,7 @@ class App extends Component {
         content: data.content,
         id: data.id,
         type: data.type,
+        color: data.color
       }
       if(data.type === "userOnline") {
         this.userActive(data)
@@ -80,9 +81,9 @@ class App extends Component {
         messages: this.state.messages.concat([newMessage])
       })
     }
+
+
   }
-
-
   render() {
     return (
       <div>

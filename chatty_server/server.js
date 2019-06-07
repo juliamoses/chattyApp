@@ -25,7 +25,6 @@ wss.on('connection', (ws) => {
 
   //for displaying online users
   wss.clients.forEach(function each(client) {
-  	console.log("users online", wss.clients.size)
     if (client.readyState === WebSocket.OPEN) {
     	client.send(JSON.stringify({
     		userCount: wss.clients.size, type: "userOnline"
@@ -39,6 +38,7 @@ wss.on('connection', (ws) => {
 		parsedData.id = uuidv4();
 		if (parsedData.type === "postMessage") {
 			parsedData.type = 'incomingMessage'
+      parsedData.color = ws.color
 			const stringedData = JSON.stringify(parsedData)
 
 			wss.clients.forEach(function each(client) {

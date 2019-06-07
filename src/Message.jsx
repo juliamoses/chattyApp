@@ -8,7 +8,9 @@ class Message extends Component {
           {this.props.message.type === "incomingMessage" ?
 
           <div>
-          <span className="message-username">{this.props.message.username}</span>
+            <span className="message-username" style={{color: this.props.message.color}}>
+              {this.props.message.username}
+            </span>
           <span className="message-content">{this.props.message.content}</span>
           </div> : 
 
@@ -19,9 +21,11 @@ class Message extends Component {
           </span>}
         </div>
        </div>
-          
+
     )
   }
 }
 
 export default Message;
+
+ //{message.color}
