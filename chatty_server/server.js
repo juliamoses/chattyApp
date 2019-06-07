@@ -13,8 +13,14 @@ const server = express()
 const wss = new SocketServer({ server });
 
 
+const randomizeColor = () => {
+  const colors = ['#00efef', '#ff4992', '#f39025', '#aaa']
+  return colors[Math.floor(Math.random() * colors.length)];
+}
+
+
 wss.on('connection', (ws) => {
-  console.log('Client connected');
+  ws.color = randomizeColor();
 
 
   //for displaying online users
